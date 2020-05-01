@@ -4,7 +4,7 @@
             <input type="checkbox" v-on:change="toggleTodo(todo)"/>
             <strong>{{ index + 1 }} </strong>
 
-            <i>{{ todo.title}}</i>
+            <i>{{ todo.title | uppercase }}</i>
         </span>
         <button class="rm" v-on:click="removeTodo(todo)">&times;</button>
     </li>
@@ -29,6 +29,11 @@
             },
             removeTodo(todo) {
                 this.$emit('remove-todo', todo.id)
+            }
+        },
+        filters: {
+            uppercase: function(value) {
+                return value.toUpperCase();
             }
         }
     }
