@@ -6,14 +6,23 @@
                 v-on:add-todo="addTodo"
         />
         <hr/>
+
+        <RefreshTodos v-on:refresh-todos="refreshTodos"></RefreshTodos>
+        <hr/>
+
+        <Loader v-if="loading"/>
         <TodoList
+                v-else-if="todos.length"
                 v-bind:todos="todos"
                 v-on:remove-todo="removeTodo"
         />
+        <p v-if="!todos.length">No Todos!</p>
     </div>
 </template>
 
 <script>
+    import RefreshTodos from '@/components/RefreshTodos.vue'
+    import Loader from '@/components/Loader.vue'
     import AddTodo from '@/components/AddTodo.vue'
     import TodoList from '@/components/TodoList.vue'
 
@@ -28,20 +37,18 @@
                 ],
                 formData: {
                     name: 'Добавление TODO'
-                }
+                },
+                loading: false
             }
         },
         mounted() {
-            fetch('https://jsonplaceholder.typicode.com/todos?_limit=3')
-                .then(response => response.json())
-                .then(json => {
-                    console.log(json)
-                    this.todos = json
-                })
+            this.refreshTodos();
         },
         components: {
             TodoList,
             AddTodo,
+            Loader,
+            RefreshTodos,
         },
         methods: {
             removeTodo(id) {
@@ -49,6 +56,20 @@
             },
             addTodo(todo) {
                 this.todos.push(todo)
+            },
+            refreshTodos() {
+                this.loading = true;
+                fetch('https://jsonplaceholder.typicode.com/todos?_limit=3')
+                    .then(response => {
+                        return response.json();
+                    })
+                    .then(json => {
+                        var self = this;
+                        setTimeout(function() {
+                            self.todos = json
+                            self.loading = false;
+                        }, 500)
+                    })
             }
         }
     }
