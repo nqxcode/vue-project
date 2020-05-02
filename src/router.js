@@ -8,6 +8,6 @@ export default new Router ({
     mode: 'history',
     routes: [
         {path: '/', component: Home},
-        {path: '/todos', component: () => { return import('@/views/Todos.vue')} },
+        {path: '/todos', component: () => { return import('@/views/Todos.vue')}, name: 'todos'},
     ]
 })
