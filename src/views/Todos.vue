@@ -1,8 +1,14 @@
 <template>
     <div>
         <h2>Todos</h2>
+        <hr/>
         <p>Поиск: <a target="_blank" v-bind:href="searchUrl">{{ searchUrl }}</a></p>
         <p>Поиск: <span v-html="searchLink"></span></p>
+        <hr/>
+
+        <p>Счетчик {{ counter }}</p>
+        <button v-on:click="incrementCounter"> Увеличить счетчик</button>
+        <hr/>
 
         <AddTodo
                 v-bind:formData="formData"
@@ -42,8 +48,10 @@
                     name: 'Добавление TODO'
                 },
                 loading: false,
+
                 searchUrl: 'http://www.google.com',
-                searchLink: "<a target='_blank' href='http://www.google.com'>www.google.com</a>"
+                searchLink: "<a target='_blank' href='http://www.google.com'>www.google.com</a>",
+                counter: 0,
             }
         },
         mounted() {
@@ -70,11 +78,14 @@
                     })
                     .then(json => {
                         var self = this;
-                        setTimeout(function() {
+                        setTimeout(function () {
                             self.todos = json
                             self.loading = false;
                         }, 500)
                     })
+            },
+            incrementCounter() {
+                this.counter++;
             }
         }
     }
