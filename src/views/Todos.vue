@@ -7,7 +7,7 @@
         <hr/>
 
         <p>Счетчик {{ counter }}</p>
-        <button v-on:click="incrementCounter"> Увеличить счетчик</button>
+        <button v-on:click="incrementCounter(1, $event)"> Увеличить счетчик</button>
         <hr/>
 
         <AddTodo
@@ -84,8 +84,9 @@
                         }, 500)
                     })
             },
-            incrementCounter() {
-                this.counter++;
+            incrementCounter(num, event) {
+                this.counter += num;
+                event.target.style.color = this.counter > 0 && this.counter < 5 ? 'red' : 'blue';
             }
         }
     }
