@@ -1,6 +1,9 @@
 <template>
     <div>
         <h2>Todos</h2>
+        <p>Поиск: <a target="_blank" v-bind:href="searchUrl">{{ searchUrl }}</a></p>
+        <p>Поиск: <span v-html="searchLink"></span></p>
+
         <AddTodo
                 v-bind:formData="formData"
                 v-on:add-todo="addTodo"
@@ -38,7 +41,9 @@
                 formData: {
                     name: 'Добавление TODO'
                 },
-                loading: false
+                loading: false,
+                searchUrl: 'http://www.google.com',
+                searchLink: "<a target='_blank' href='http://www.google.com'>www.google.com</a>"
             }
         },
         mounted() {
