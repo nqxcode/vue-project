@@ -3,12 +3,17 @@
         <h2>Todos</h2>
         <hr/>
         <p>Поиск: <a target="_blank" v-bind:href="searchUrl">{{ searchUrl }}</a></p>
-        <p>Поиск: <span v-html="searchLink"></span></p>
+        <p>Поиск: <span v-html="searchLink" v-on:click.prevent=""></span></p>
         <hr/>
 
         <p>Счетчик {{ counter }}</p>
         <button v-on:click="incrementCounter(1, $event)"> Увеличить счетчик</button>
         <hr/>
+
+        <span v-on:mousemove="handleMouseMove">X: {{ x }} Y: {{ y}} <span v-on:mousemove.stop="">Not change</span></span>
+        <hr/>
+
+        <input type="text" v-on:keyup.enter.space="alertValue" />
 
         <AddTodo
                 v-bind:formData="formData"
@@ -52,6 +57,8 @@
                 searchUrl: 'http://www.google.com',
                 searchLink: "<a target='_blank' href='http://www.google.com'>www.google.com</a>",
                 counter: 0,
+                x: 0,
+                y: 0,
             }
         },
         mounted() {
@@ -87,6 +94,13 @@
             incrementCounter(num, event) {
                 this.counter += num;
                 event.target.style.color = this.counter > 0 && this.counter < 5 ? 'red' : 'blue';
+            },
+            handleMouseMove(event) {
+                this.x = event.clientX;
+                this.y = event.clientY;
+            },
+            alertValue(event) {
+                alert(event.target.value)
             }
         }
     }
