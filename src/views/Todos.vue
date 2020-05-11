@@ -2,33 +2,33 @@
     <div>
         <h2>Todos</h2>
         <hr/>
-        <p>Поиск: <a target="_blank" v-bind:href="searchUrl">{{ searchUrl }}</a></p>
-        <p>Поиск: <span v-html="searchLink" v-on:click.prevent=""></span></p>
+        <p>Поиск: <a target="_blank" :href="searchUrl">{{ searchUrl }}</a></p>
+        <p>Поиск: <span v-html="searchLink" click.prevent=""></span></p>
         <hr/>
 
         <p>Счетчик {{ counter }}</p>
-        <button v-on:click="incrementCounter(1, $event)"> Увеличить счетчик</button>
+        <button @click="incrementCounter(1, $event)"> Увеличить счетчик</button>
         <hr/>
 
-        <span v-on:mousemove="handleMouseMove">X: {{ x }} Y: {{ y}} <span v-on:mousemove.stop="">Not change</span></span>
+        <span @mousemove="handleMouseMove">X: {{ x }} Y: {{ y}} <span @mousemove.stop="">Not change</span></span>
         <hr/>
 
-        <input type="text" v-on:keyup.enter.space="alertValue" />
+        <input type="text" @keyup.enter.space="alertValue" />
 
         <AddTodo
                 v-bind:formData="formData"
-                v-on:add-todo="addTodo"
+                @add-todo="addTodo"
         />
         <hr/>
 
-        <RefreshTodos v-on:refresh-todos="refreshTodos"></RefreshTodos>
+        <RefreshTodos @refresh-todos="refreshTodos"></RefreshTodos>
         <hr/>
 
         <Loader v-if="loading"/>
         <TodoList
                 v-else-if="todos.length"
                 v-bind:todos="todos"
-                v-on:remove-todo="removeTodo"
+                @remove-todo="removeTodo"
         />
         <p v-if="!todos.length">No Todos!</p>
     </div>
